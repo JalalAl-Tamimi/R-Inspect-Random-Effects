@@ -236,6 +236,16 @@ dataCong %>%
 We use an LMER model with a crossed random effect. To choose our optimal model, we start first by a simple model with only random intercepts, increasing complexity by accounting for random slopes for both subjects and items. It is clear from our visualisation above, that there is no interaction between the two predictors. However, for demonstration purposes, we do test for this
 
 
+# Simple Linear Model
+
+```{r warning=FALSE, message=FALSE, error=FALSE}
+mdl.lm <- dataCong %>% 
+  lm(LookingTime ~ Cond + Age, data = .)
+summary(mdl.lm)
+hist(residuals(mdl.lm))
+qqnorm(residuals(mdl.lm)); qqline(residuals(mdl.lm))
+plot(fitted(mdl.lm), residuals(mdl.lm), cex = 4)
+```
 
 ## No interaction
 
@@ -347,6 +357,14 @@ xmdl.Optimal <- dataCong %>%
        control = lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e5)))
 ```
 
+
+## Model criticism
+
+```{r warning=FALSE, message=FALSE, error=FALSE}
+hist(residuals(xmdl.Optimal))
+qqnorm(residuals(xmdl.Optimal)); qqline(residuals(xmdl.Optimal))
+plot(fitted(xmdl.Optimal), residuals(xmdl.Optimal), cex = 4)
+```
 
 ## Summary
 
